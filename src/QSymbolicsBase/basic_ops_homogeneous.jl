@@ -12,11 +12,23 @@ julia> @ket k
 julia> 2*k
 2|k⟩
 
+julia> 2//3*k
+(2//3)|k⟩
+
+julia> π*k
+(π)|k⟩
+
 julia> @op A
 A
 
 julia> 2*A
 2A
+
+julia> 2//3*A
+(2//3)A
+
+julia> π*A
+(π)A
 ```
 """
 @withmetadata struct SScaled{T<:QObj} <: Symbolic{T}
@@ -46,24 +58,11 @@ Base.:(/)(x::Symbolic{T}, c) where {T<:QObj} = iszero(c) ? throw(DomainError(c,"
 basis(x::SScaled) = basis(x.obj)
 
 const SScaledKet = SScaled{AbstractKet}
-function Base.show(io::IO, x::SScaledKet)
-    if x.coeff isa Real
-        print(io, "$(x.coeff)$(x.obj)")
-    else
-        print(io, "($(x.coeff))$(x.obj)")
-    end
-end
 const SScaledOperator = SScaled{AbstractOperator}
-function Base.show(io::IO, x::SScaledOperator)
-    if x.coeff isa Real
-        print(io, "$(x.coeff)$(x.obj)")
-    else
-        print(io, "($(x.coeff))$(x.obj)")
-    end
-end
 const SScaledBra = SScaled{AbstractBra}
-function Base.show(io::IO, x::SScaledBra)
-    if x.coeff isa Real
+
+function Base.show(io::IO, x::SScaled)
+    if x.coeff isa Integer || x.coeff isa AbstractFloat
         print(io, "$(x.coeff)$(x.obj)")
     else
         print(io, "($(x.coeff))$(x.obj)")

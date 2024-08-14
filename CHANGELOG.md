@@ -1,5 +1,10 @@
 # News
 
+## v0.4.3 - 2024-08-14
+
+- Updated how scaled symbolic QObj(ects) display
+
+
 ## v0.4.3 - 2024-08-13
 
 - **(fix)** Fix for incorrect basis for `express(_,::QuantumOpticsRepr)` for certain operators.
